@@ -10,6 +10,8 @@ all:
 	make -C script
 	mv script/script bin/
 
+	cp u_boot_env_gen bin/
+
 clean:
 	make -C create_mbr clean
 	make -C parser_mbr clean
