@@ -11,6 +11,7 @@ all:
 	mv script/script bin/
 
 	cp u_boot_env_gen bin/
+	cp dragonsecboot bin/
 
 clean:
 	make -C create_mbr clean
