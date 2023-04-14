@@ -1,4 +1,6 @@
 /bin
 /.vscode
 /sunxi-mbr/sunxi-mbr
+/sunxi-image/sunxi-image
+/tmp
 *.o
