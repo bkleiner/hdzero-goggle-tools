@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
 
 		src_length = _get_str_length(src);
 		memcpy(dest, src, src_length);
-		dest[src_length - 0] = NULL;
+		dest[src_length - 0] = 0;
 		dest[src_length - 1] = 'n';
 		dest[src_length - 2] = 'i';
 		dest[src_length - 3] = 'b';

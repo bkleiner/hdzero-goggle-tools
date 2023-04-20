@@ -1,13 +1,14 @@
 // update.cpp : Defines the entry point for the console application.
 //
 #include <malloc.h>
-#include "types.h"
 #include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include "types.h"
 #include "script.h"
 #include "crc.h"
 #include "sunxi_mbr.h"
-#include <ctype.h>
-#include <unistd.h>
 #include "sparse_format.h"
 
 //#define DEBUG
@@ -22,7 +23,7 @@
 #define  MAX_PATH  260
 
 int IsFullName(const char *FilePath);
-__s32  update_mbr_crc(sunxi_mbr_t *mbr_info, __s32 mbr_count, FILE *mbr_file);
+__s32 update_mbr_crc(sunxi_mbr_t *mbr_info, __s32 mbr_count, FILE *mbr_file);
 __s32 update_for_part_info(sunxi_mbr_t *mbr_info, sunxi_download_info *dl_map, __s32 mbr_count, __s32 mbr_total_size);
 __s32 update_dl_info_crc(sunxi_download_info *dl_map, FILE *dl_file);
 __s32 check_dl_size(char *filename,int part_size);
@@ -30,13 +31,11 @@ __s32 check_dl_size(char *filename,int part_size);
 
 int get_file_name(char *path, char *name)
 {
-	char buffer[MAX_PATH];
-	char buffer_cwd[MAX_PATH];
+	char buffer_cwd[MAX_PATH] = {0};
+	char buffer[MAX_PATH * 2] = {0};
 	int  i, length;
 	char *pt;
 
-	memset(buffer, 0, MAX_PATH);
-	memset(buffer_cwd, 0, MAX_PATH);
 	if(!IsFullName(path))
 	{
 	   if (getcwd(buffer_cwd, MAX_PATH) == NULL)
@@ -44,7 +43,7 @@ int get_file_name(char *path, char *name)
 			perror( "getcwd error" );
 			return -1;
 	   }
-	   sprintf(buffer, "%s/%s", buffer_cwd, path);
+	   snprintf(buffer, sizeof(buffer), "%s/%s", buffer_cwd, path);
 	}
 	else
 	{
