@@ -5,6 +5,7 @@
 
 #include "json.hpp"
 
+#include "config.h"
 #include "util.hpp"
 
 sunxi_dlinfo::sunxi_dlinfo(const std::string _path)
@@ -31,7 +32,7 @@ void sunxi_dlinfo::add_file(
     const std::string &vf_name,
     bool encrypt,
     bool verify) {
-    const uint64_t part_size = MEM_ALIGN(std::filesystem::file_size(name + ".fex"), SUNXI_PAGE_SIZE) / SUNXI_PAGE_SIZE;
+    const uint64_t part_size = MEM_ALIGN(std::filesystem::file_size(name + ".fex"), PART_ALIGN_SIZE) / SUNXI_PAGE_SIZE;
 
     auto part = &header.array[header.download_count];
     insert_string(part->name, name, 16);

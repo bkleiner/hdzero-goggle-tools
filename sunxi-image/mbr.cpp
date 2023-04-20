@@ -5,6 +5,7 @@
 
 #include "json.hpp"
 
+#include "config.h"
 #include "util.hpp"
 
 sunxi_mbr::sunxi_mbr(const std::string _path)
@@ -35,7 +36,7 @@ void sunxi_mbr::add_file(
     insert_string(part->name, name, 16);
     insert_string(part->classname, classname, 16);
     if (user_type != 0x8100) {
-        const uint64_t part_size = MEM_ALIGN(std::filesystem::file_size(name + ".fex"), SUNXI_PAGE_SIZE) / SUNXI_PAGE_SIZE;
+        const uint64_t part_size = MEM_ALIGN(std::filesystem::file_size(name + ".fex"), PART_ALIGN_SIZE) / SUNXI_PAGE_SIZE;
         part->lenhi = (part_size >> 32) & 0xffffffff;
         part->lenlo = (part_size >> 0) & 0xffffffff;
     }
